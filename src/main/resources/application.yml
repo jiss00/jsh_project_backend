@@ -1,0 +1,23 @@
+jwt:
+  header: Authorization
+  secret: 4oCYbGVhLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtbmZ0LXNwcmluZy1ib290LWp3dC10dXRvcmlhbOKAmQo=
+  token-validity-in-seconds: 86400
+
+
+
+  jpa:
+    database: mysql
+    show_sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+logging.level:
+  org.hibernate.SQL: debug
+#  org.hibernate.type: trace
+server:
+  address: localhost
+  port: 8080
