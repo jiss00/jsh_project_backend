@@ -23,8 +23,5 @@ public class Board {
     private String date;
     private String name;
 
-    @JoinColumn(name = "member")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Member member;
+
 }
