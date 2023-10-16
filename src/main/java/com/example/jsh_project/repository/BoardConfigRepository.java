@@ -4,6 +4,7 @@ import com.example.jsh_project.domain.Entity.BoardConfig;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardConfigRepository {
     @PersistenceContext
     EntityManager em;
-
     public void save(BoardConfig boardConfig){
         em.persist(boardConfig);
     }
