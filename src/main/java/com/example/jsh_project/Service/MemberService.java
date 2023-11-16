@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -20,7 +22,7 @@ public class MemberService {
     private final MailService mailService;
     @Value("${jwt.token.secret}")
     private String secretkey;
-    private final long expireTimeMs = 1000 * 60 * 60 * 24 * 7; // 토큰 7일
+    private final long expireTimeMs = 1000 * 60 * 60; // 토큰 1시간
 
     public MemberDto register(MemberRegisterRequest request) {
         memberRepository.findByEmail(request.getEmail())
@@ -55,10 +57,10 @@ public class MemberService {
 
         return member.getPassword();
     }
-    public void modifyPwd(MemberDto memberDto) throws Exception{
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String pwd = encoder.encode(memberDto.getPassword());
 
+    public Long findByEmail(String email) {
+        Optional<Member> member = memberRepository.findByEmail(email);
+        return member.get().getId();
 
     }
 }

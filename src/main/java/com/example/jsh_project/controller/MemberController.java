@@ -1,13 +1,12 @@
 package com.example.jsh_project.controller;
 
-import com.example.jsh_project.Service.BookService;
-import com.example.jsh_project.Service.MailService;
-import com.example.jsh_project.Service.MemberService;
+import com.example.jsh_project.Service.*;
 import com.example.jsh_project.domain.Dto.book.*;
 import com.example.jsh_project.domain.Dto.request.*;
 import com.example.jsh_project.domain.Dto.response.MemberLoginResponse;
 import com.example.jsh_project.domain.Dto.response.MemberRegisterResponse;
-import com.example.jsh_project.domain.Dto.response.RecommendResponse;
+import com.example.jsh_project.domain.Entity.ShoppingBasket;
+import com.example.jsh_project.domain.Entity.ShoppingList;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,8 +27,11 @@ public class MemberController {
     private final MemberService memberService;
     private final MailService mailService;
     private final BookService bookService;
+    private final OrderService orderService;
+    private final PurchaseService purchaseService;
+
     @PostMapping("/email")
-    public void mail(@RequestBody MailSend email, HttpServletResponse response){
+    public void mail(@RequestBody MailSend email, HttpServletResponse response) {
         String authNumber = mailService.sendMail(email.getEmail());
         CookieGenerator cookieGenerator = new CookieGenerator();
         cookieGenerator.setCookieName("authNumberCookie");
@@ -43,14 +45,24 @@ public class MemberController {
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
                     if ("authNumberCookie".equals(cookie.getName())) {
-                        if(!cookie.getValue().equals(memberRegisterRequest.getConfim())){
+                        if (!cookie.getValue().equals(memberRegisterRequest.getConfim())) {
                             System.out.println("에러뜨는거 정상");
                             throw new RuntimeException();
                         }
 
-                    }}}
+                    }
+                }
+            }
             MemberDto memberDto = memberService.register(memberRegisterRequest);
-            return new ResponseEntity<>(new MemberRegisterResponse(memberDto.getEmployName(),memberDto.getEmail(),memberDto.getPassword()), HttpStatus.OK);
+            ShoppingBasket basket = new ShoppingBasket();
+            ShoppingList list = new ShoppingList();
+
+            basket.setId(memberDto.getId());
+            list.setId(memberDto.getId());
+
+            orderService.save(basket);
+            purchaseService.save(list);
+            return new ResponseEntity<>(new MemberRegisterResponse(memberDto.getEmployName(), memberDto.getEmail(), memberDto.getPassword()), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -61,61 +73,51 @@ public class MemberController {
     public ResponseEntity<MemberLoginResponse> login(@RequestBody MemberLoginRequest memberLoginRequest) {
         try {
             String token = memberService.login(memberLoginRequest.getEmail(), memberLoginRequest.getPassword());
+            Long memberId = memberService.findByEmail(memberLoginRequest.getEmail());
 
-            return new ResponseEntity<>(new MemberLoginResponse(token), HttpStatus.OK);
+            return new ResponseEntity<>(new MemberLoginResponse(token,memberId), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PostMapping("/recommend")
     public ResponseEntity<List<BookRequest>> recommend(@RequestBody Member_recommend member) throws IOException {
         String score = member.getScore();
-        if(score.equals("basic")){
-            Book_basic book = new Book_basic();
-            List<BookRequest> all = bookService.findAll(1L);
+        if (score.equals("basic")) {
+            List<BookRequest> all = bookService.findAll("B");
             try {
                 return new ResponseEntity<>(all, HttpStatus.OK);
             } catch (Exception e) {
                 e.printStackTrace();
                 return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
-
-        else if(score.equals("600 ~")){
-            Book_600 book = new Book_600();
-            List<BookRequest> all = bookService.findAll(2L);
+        } else if (score.equals("600 ~")) {
+            List<BookRequest> all = bookService.findAll("O");
             try {
                 return new ResponseEntity<>(all, HttpStatus.OK);
             } catch (Exception e) {
                 e.printStackTrace();
                 return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
-
-        else if(score.equals("700 ~")){
-
-            Book_600 book = new Book_600();
-            List<BookRequest> all = bookService.findAll(52L);
+        } else if (score.equals("700 ~")) {
+            List<BookRequest> all = bookService.findAll("T");
             try {
                 return new ResponseEntity<>(all, HttpStatus.OK);
             } catch (Exception e) {
                 e.printStackTrace();
                 return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
-
-        else if(score.equals("850 ~")){
-            Book_600 book = new Book_600();
-            List<BookRequest> all = bookService.findAll(102L);
+        } else if (score.equals("850 ~")) {
+            List<BookRequest> all = bookService.findAll("F");
             try {
                 return new ResponseEntity<>(all, HttpStatus.OK);
             } catch (Exception e) {
                 e.printStackTrace();
                 return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
-        else{
+        } else {
             return null;
         }
     }

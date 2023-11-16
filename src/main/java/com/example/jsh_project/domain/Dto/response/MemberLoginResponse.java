@@ -8,4 +8,5 @@ import lombok.Getter;
 @Getter
 public class MemberLoginResponse {
     private String token;
+    private Long memberId;
 }

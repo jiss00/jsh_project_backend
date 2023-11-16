@@ -53,8 +53,8 @@ public class BoardController {
     public BoardList findAll(@RequestParam String id, @RequestParam String page){
         List<BoardRequest> all = boardService.findAll(id);
         int page1 = Integer.parseInt(page);
-        int first_index = (page1 -1) * 10;
-        int last_index = Math.min(all.size(),first_index+10);
+        int first_index = (page1 -1) * 5;
+        int last_index = Math.min(all.size(),first_index+5);
         BoardList boardList = new BoardList();
         boardList.setBoardlist(all.subList(first_index,last_index));
         boardList.setSize(String.valueOf(all.size()));
@@ -97,8 +97,8 @@ public class BoardController {
     public BoardList list(@RequestParam String name, @RequestParam String page){
         List<BoardRequest> all = boardService.findByName(name);
         int page1 = Integer.parseInt(page);
-        int first_index = (page1 -1) * 10;
-        int last_index = Math.min(all.size(),first_index+10);
+        int first_index = (page1 -1) * 5;
+        int last_index = Math.min(all.size(),first_index+5);
         BoardList boardList = new BoardList();
         boardList.setBoardlist(all.subList(first_index,last_index));
         boardList.setSize(String.valueOf(all.size()));

@@ -31,8 +31,12 @@ public class Member {
     @Column(name = "score")
     private String toeic;
 
-    @OneToMany(mappedBy = "member")
-    private List<ShoppingList> list;
+    @OneToOne(mappedBy = "member")
+    private ShoppingList list;
+
+    @OneToOne(mappedBy = "member")
+    private ShoppingBasket orders;
+
 
 
 }
