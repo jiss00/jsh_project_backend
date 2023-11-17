@@ -14,6 +14,7 @@ public class CartRequest {
     private Long book_id; //책 id
     private Integer stock; //살 책의 개수
     private Long member_id;
+    private String merchant_id; //주문번호
     private Integer where; //0은 바로 구매, 1은 장바구니에서 구매
 
 }

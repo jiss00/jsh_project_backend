@@ -27,12 +27,13 @@ public class MemberService {
     public MemberDto register(MemberRegisterRequest request) {
         memberRepository.findByEmail(request.getEmail())
                 .ifPresent(member -> {
-                    throw new RuntimeException();
+                    throw new RuntimeException("이미존재하는 이메일 입니다.");
+
                 });
 
         memberRepository.findByEmployName(request.getEmployName())
                 .ifPresent(member ->{
-                    throw new RuntimeException();
+                    throw new RuntimeException("이미 존재하는 닉네임입니다.");
                 });
 
 
@@ -42,7 +43,7 @@ public class MemberService {
 
     public String login(String email, String password) {
         Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("가입되지 않은 사원입니다."));
+                .orElseThrow(() -> new RuntimeException("가입되지 않은 이메일입니다."));
 
         if (!bCryptPasswordEncoder.matches(password, member.getPassword())) {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");

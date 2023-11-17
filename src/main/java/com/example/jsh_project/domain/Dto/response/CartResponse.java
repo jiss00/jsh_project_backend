@@ -26,6 +26,8 @@ public class CartResponse {
     private List<String> title = new ArrayList<>();
     private List<String> img = new ArrayList<>();
     private List<Integer> quantities = new ArrayList<>();
+    private List<String> merchant_uid= new ArrayList<>();
+
 
     public void add_price(Integer price){
         prices.add(price);

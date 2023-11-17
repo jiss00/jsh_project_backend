@@ -7,6 +7,7 @@ import com.example.jsh_project.Service.PurchaseService;
 import com.example.jsh_project.domain.Dto.book.BookRequest;
 import com.example.jsh_project.domain.Dto.request.CancelRequest;
 import com.example.jsh_project.domain.Dto.request.CartRequest;
+import com.example.jsh_project.domain.Dto.request.Member_recommend;
 import com.example.jsh_project.domain.Dto.response.CartResponse;
 import com.example.jsh_project.domain.Dto.response.MemberLoginResponse;
 import com.example.jsh_project.domain.Dto.response.ViewPurchase;
@@ -77,7 +78,7 @@ public class OrderController {
         try {
             Book book = bookService.findById(request.getBook_id());
             CartResponse cartResponse = new CartResponse();
-            ShoppingList list = orderService.purchase(request.getMember_id(), book, request.getStock(),request.getWhere());
+            ShoppingList list = orderService.purchase(request.getMember_id(), book, request.getStock(),request.getWhere(),request.getMerchant_id());
             for(int i =0;i<list.getItems().size();i++){
                 cartResponse.add_item(list.getItems().get(i));
             }
@@ -100,6 +101,10 @@ public class OrderController {
                 view.getTitles().add(item.get(i).getBook().getTitle());
                 view.getImgs().add(item.get(i).getBook().getImg());
                 view.getStock().add(item.get(i).getQuantity());
+                view.getPrices().add(item.get(i).getBook().getPrice());
+                view.getId().add(item.get(i).getId());
+                view.getMerchant_uid().add(item.get(i).getMerchant_uid());
+
             }
             return view;
 
@@ -119,6 +124,17 @@ public class OrderController {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+    @PostMapping("/findBook")
+    public Book getBookId(@RequestBody Member_recommend book){
+        try{
+            Long id = bookService.findByName(book.getScore());
+            return bookService.findById(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
 

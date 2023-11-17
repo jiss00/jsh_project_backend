@@ -77,7 +77,7 @@ public class MailTest {
     }
     @Test
     public void delete(){
-        orderService.deleteAll(1L);
+        orderService.deletePurchase();
     }
     @Test
     public void sav1e(){

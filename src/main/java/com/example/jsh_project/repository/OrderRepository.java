@@ -59,5 +59,9 @@ public class OrderRepository {
         Query query = em.createQuery("delete from CartItem c where c.quantity=0");
         query.executeUpdate();
     }
+    public void deletePurchase(){
+        Query query = em.createQuery("delete from PurchaseItem c where c.shoppingList.id= 1");
+        query.executeUpdate();
+    }
 
 }

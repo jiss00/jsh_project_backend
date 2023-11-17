@@ -37,11 +37,15 @@ public class BookService {
     public Book findById(Long id){
         return bookRepository.findById(id);
     }
+    //책 이름으로 책id 반환받기
+    public Long findByName(String title){
+        return bookRepository.findByName(title);
+    }
     @Transactional
     public void delete(Long id){
         Book book = findById(id);
         bookRepository.remove(book);
     }
-    }
+}
 
 

@@ -108,4 +108,10 @@ public class BookRepository {
     public void update(Book book) {
         em.merge(book);
     }
+
+    public Long findByName(String title) {
+        List<Book> resultList = em.createQuery("select b from Book b where b.title =: title", Book.class)
+                .setParameter("title", title).getResultList();
+        return resultList.get(0).getId();
+    }
 }

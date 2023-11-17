@@ -14,10 +14,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PurchaseItem {
-    public PurchaseItem(ShoppingList shoppingList, Book book, Integer quantity) {
+    public PurchaseItem(ShoppingList shoppingList, Book book, Integer quantity,String merchant_uid) {
         this.shoppingList = shoppingList;
         this.book = book;
         this.quantity = quantity;
+        this.merchant_uid = merchant_uid;
     }
 
     @Id
@@ -35,6 +36,8 @@ public class PurchaseItem {
 
     @Column(name = "quantity")
     private Integer quantity;
+    @Column(name="merchant_uid")
+    private String merchant_uid;
 
     public Integer remove_stock(Integer stock){
         return this.quantity-=stock;

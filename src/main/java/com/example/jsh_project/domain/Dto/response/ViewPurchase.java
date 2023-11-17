@@ -20,6 +20,7 @@ public class ViewPurchase {
     private List<Integer> prices = new ArrayList<>();
     private List <Long> id = new ArrayList<>();
     private List <Long> books = new ArrayList<>();
+    private List <String> merchant_uid = new ArrayList<>();
 
     private Integer price;
 }

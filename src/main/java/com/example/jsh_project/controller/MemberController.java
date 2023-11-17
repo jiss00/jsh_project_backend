@@ -76,6 +76,9 @@ public class MemberController {
             Long memberId = memberService.findByEmail(memberLoginRequest.getEmail());
 
             return new ResponseEntity<>(new MemberLoginResponse(token,memberId), HttpStatus.OK);
+        }catch (RuntimeException e) {
+            // RuntimeException이 발생하면 해당 예외 메시지를 클라이언트에게 전달
+            return new ResponseEntity<>(new MemberLoginResponse(e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -48,19 +48,21 @@ public class OrderService {
     }
 
     @Transactional
-    public ShoppingList purchase(Long id, Book book,Integer stock,Integer where){
+    public ShoppingList purchase(Long id, Book book,Integer stock,Integer where,String merchant_uid){
         ShoppingList list = purchaseService.findById(id);
         ShoppingBasket basket = findById(id);
         List<CartItem> cartItems = findItems(id);
         list.add_price(book.getPrice()*stock);
         list.addBooks(book);
-        PurchaseItem purchaseItem = new PurchaseItem(list,book,stock);
+        PurchaseItem purchaseItem = new PurchaseItem(list,book,stock,merchant_uid);
         purchaseService.saveItem(purchaseItem);
         list.addItems(purchaseItem);
         if(where==1){
             for(int i= 0;i<cartItems.size();i++){
                 if(cartItems.get(i).getBook().getId() == book.getId()){
                     CartItem cartItem = cartItems.get(i);
+                    Integer price = basket.getPrice() - cartItem.getBook().getPrice();
+                    basket.setPrice(price);
                     basket.removeItems(cartItem);
                     update(basket);
                     break;
@@ -121,5 +123,9 @@ public class OrderService {
     @Transactional
     public void deleteItem(){
         orderRepository.deleteItem();
+    }
+    @Transactional
+    public void deletePurchase(){
+        orderRepository.deletePurchase();
     }
 }
