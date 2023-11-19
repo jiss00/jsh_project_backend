@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://jshtoy.netlify.app")
 @RequestMapping("/order")
 @RequiredArgsConstructor
 public class OrderController {
@@ -49,7 +49,7 @@ public class OrderController {
             return null;
         }
     }
-    @CrossOrigin(origins = "http://localhost:3000/payment")
+    @CrossOrigin(origins = "https://jshtoy.netlify.app/")
     @GetMapping("/cart")
     public ViewPurchase cart(@RequestParam Long id) throws IOException {
         try {
@@ -71,7 +71,7 @@ public class OrderController {
             return null;
         }
     }
-    @CrossOrigin(origins = "http://localhost:3000/payment")
+    @CrossOrigin(origins = "https://jshtoy.netlify.app/")
     @PostMapping("/purchase")
     //하나의 책에 대해서 구매하는 것임.
     public CartResponse purchase(@RequestBody CartRequest request ) throws IOException {
@@ -90,7 +90,7 @@ public class OrderController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000/payment")
+    @CrossOrigin(origins = "https://jshtoy.netlify.app/")
     @GetMapping("/purchase")
     public ViewPurchase purchase(@RequestParam Long id) throws IOException{
         try{
@@ -115,7 +115,7 @@ public class OrderController {
 
     }
     @PostMapping("/cancel")
-    @CrossOrigin(origins = "http://localhost:3000/payment")
+    @CrossOrigin(origins = "https://jshtoy.netlify.app/")
     public void cancel(@RequestBody CancelRequest request){
         try{
             ViewPurchase view = new ViewPurchase();

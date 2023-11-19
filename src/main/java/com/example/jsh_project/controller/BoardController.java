@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/board")
-@CrossOrigin(origins = "http://localhost:3000" )
+@CrossOrigin(origins = "https://jshtoy.netlify.app/" )
 public class BoardController {
     private final BoardService boardService;
     private final BoardRepository boardRepository;

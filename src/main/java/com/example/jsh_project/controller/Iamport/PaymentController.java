@@ -21,7 +21,7 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000" )
+@CrossOrigin(origins = "https://jshtoy.netlify.app/" )
 public class PaymentController {
     private final RefundService refundService;
     private final PurchaseService purchaseService;

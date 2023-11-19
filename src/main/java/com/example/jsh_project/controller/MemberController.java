@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/member")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://jshtoy.netlify.app/")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
