@@ -15,6 +15,7 @@ public class MemberRegisterRequest {
     private String employName;
     private String phoneNumber;
     private String password;
+    private String confirm;
 
     public Member toEntity(String password) {
         return Member.builder()

@@ -41,6 +41,18 @@ public class MemberController {
     @PostMapping("/join")
     public ResponseEntity<MemberRegisterResponse> register(@RequestBody MemberRegisterRequest memberRegisterRequest, HttpServletRequest request) {
         try {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if ("authNumberCookie".equals(cookie.getName())) {
+                        if (!cookie.getValue().equals(memberRegisterRequest.getConfirm())) {
+                            System.out.println("에러뜨는거 정상");
+                            throw new RuntimeException();
+                        }
+
+                    }
+                }
+            }
             MemberDto memberDto = memberService.register(memberRegisterRequest);
             ShoppingBasket basket = new ShoppingBasket();
             ShoppingList list = new ShoppingList();
