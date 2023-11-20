@@ -45,7 +45,7 @@ public class MemberController {
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
                     if ("authNumberCookie".equals(cookie.getName())) {
-                        if (!cookie.getValue().equals(memberRegisterRequest.getConfim())) {
+                        if (!cookie.getValue().equals(memberRegisterRequest.getConfirm())) {
                             System.out.println("에러뜨는거 정상");
                             throw new RuntimeException();
                         }

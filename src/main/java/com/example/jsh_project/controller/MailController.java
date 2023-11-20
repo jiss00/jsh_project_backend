@@ -10,39 +10,38 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mail")
-@CrossOrigin(origins = "https://jshtoy.netlify.app/" )
+@CrossOrigin(origins = "*" )
+
 public class MailController {
     private final MailService mailService;
     private final MemberService memberService;
     private final GetClaim getClaim;
+    private String auth;
     @Value("${jwt.token.secret}")
     private String secretKey;
 
     @PostMapping("")
     public String MailSend(@RequestBody MailSend email, HttpServletRequest request){
         String num = mailService.sendMail(email.getEmail());
-        HttpSession session = request.getSession();
-        session.setAttribute("number",num);
-        System.out.println("session.getId() = " + session.getId());
+        auth = num;
+        System.out.println("auth = " + auth);
         return num;
     }
     @PostMapping("/confirm")
     public String Confirm(@RequestBody MailSend email, HttpServletRequest request){
-        HttpSession session = request.getSession();
-        String num = session.getId();
-        System.out.println("num = " + num);
-        if (email.getEmail().equals(num)) {
+        if (email.getEmail().equals(auth)) {
             return "성공";
-        } else if (num == null) {
+        } else if (auth == null) {
             return "null 값";
         } else {
-            return "실패";
+            return auth;
         }
     }
 

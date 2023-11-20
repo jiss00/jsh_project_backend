@@ -22,7 +22,7 @@ public class MemberService {
     private final MailService mailService;
     @Value("${jwt.token.secret}")
     private String secretkey;
-    private final long expireTimeMs = 1000 * 60 * 60; // 토큰 1시간
+    private final long expireTimeMs = 1000 * 60 * 60 * 10; // 토큰 1시간
 
     public MemberDto register(MemberRegisterRequest request) {
         memberRepository.findByEmail(request.getEmail())
