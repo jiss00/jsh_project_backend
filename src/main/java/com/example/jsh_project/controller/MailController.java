@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mail")
-@CrossOrigin(origins = "*" )
+@CrossOrigin(origins = "https://jshtoy.netlify.app/")
 
 public class MailController {
     private final MailService mailService;
