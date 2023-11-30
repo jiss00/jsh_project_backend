@@ -20,7 +20,7 @@
 
 - 데이터베이스
 - <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
-- 외부 API: 포트원 API
+- 결제 API: 포트원 API
 - postman
 ## ERD 다이어그램
 ![image](https://github.com/jiss00/jsh_project_backend/assets/90140865/45fe15d7-1ba3-42fc-9fec-23de8653e023)
