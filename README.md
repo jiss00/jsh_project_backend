@@ -1,32 +1,5 @@
-# 예약 서비스(Reservation Service) 및 시설평점 업데이트 서비스(Review Score Update Service)  
+저희가 작성한 요약된 정보를 바탕으로 readme.md 파일을 만들었습니다. 아래는 해당 파일의 내용입니다:
 
-![java_badge](https://img.shields.io/bage/language-java-yellow)![spring_badge](https://img.shields.io/badge/framework-spring-green)![lombok_badge](https://img.shields.io/badge/library-lombok-blue)![transaction_badge](https://img.shields.io/badge/transactional-true-brightgreen)![schedule_badge](https://img.shields.io/badge/scheduled-true-brightgreen)![logging_badge](https://img.shields.io/badge/logging-slf4j-orange)![redis_badge](https://img.shields.io/badge/database-redis-red)![pagination_badge](https://img.shields.io/badge/pagination-true-ff69b4)  
+# 프로젝트 소개<br/>이 프로젝트는 주요 스프링 부트 스프레임워크 기능을 사용하여 독립적으로 실행될 수 있는 주요 애플리케이션 클래스입니다. <br/>![Java](https://img.shields.io/badge/Java-Programming_Language-orange)![Spring_Boot](https://img.shields.io/badge/Spring_Boot-Framework-brightgreen)  ```java  public class MainApplication {     public static void main(String[] args) {         SpringApplication.run(MainApplication.class, args);     } }```  <br/>[**Spring Boot 애플리케이션 및 주요 스프링 기능**]이 Java 클래스는 [**Spring Boot**](https://spring.io/projects/spring-boot) 프레임워크를 사용하여 스탠드얼론 애플리케이션으로 실행할 수 있도록 주석이 달린 핵심 애플리케이션 클래스입니다.
 
-이 프로젝트는 학교 시설 예약을 처리하고 시설평점을 업데이트하는 데 사용됩니다.  
-
-📅 **기간 업데이트**  
-- `@Scheduled` 어노테이션을 사용하여 시설 평점을 업데이트합니다.  
-- 평점은 시설 리뷰를 기반으로 매시 정갱신됩니다.
-
-📚 **핵심 기능**  
-- **예약 기능:** 사용자는 특정 시설에 대한 예약을 생성하고, 반환, 연장할 수 있습니다.
-- **예약 현황 조회:** 사용자는 예약한 시설 및 시간대에 대한 예약 현황을 확인할 수 있습니다.
-- **평점 업데이트:** 시설에 대한 평점을 업데이트하여 사용자들에게 정확한 정보를 제공합니다.
-
-## Reservation Service
-```java
--예약 서비스는 다음과 같은 주요 기능을 제공합니다:
-- 예약 생성, 반환, 연장
-- 사용자 예약 내역 조회
-- 시설 이용 내역 조회
-- 예약 상세정보 조회
-```
-## Review Score Service
--리뷰 평점 업데이트 서비스는 다음과 같은 주요 기능을 제공합니다:
-- 서버 시간으로 매시 평점 업데이트
-- 리뷰를 기반으로한 특정 시설 평점 갱신
- 위 서비스들은 `Spring 프레임워크`를 기반으로 작성되었으며, `@Scheduled` 어노테이션을 사용하여 주기적인 작업을 처리하고,  
-`@Transactional` 어노테이션을 통해 트랜잭션을 관리합니다. 또한 `lombok` 라이브러리로 코드를 간소화하고, `Slf4j`를 사용하여 로깅을 수행합니다.  
-
-🔗 이외에도 `Redis`를 사용하여 검색 로그와 인기 검색어를 관리합니다.  
-🌐 둘다 `Java` 기반으로 작성되었으며, 완전한 기능의 예약 서비스와 리뷰 평점 업데이트를 제공합니다.
+# 프로젝트 활용 <br/>이 Java 클래스는 [**Spring 용어**](https://spring.io/understanding)를 사용하여 게시판 구성 엔티티를 관리하는 서비스 클래스입니다. 핵심 기능으로는 데이터의 읽기 및 저장을 위한 트랜잭션 처리가 있습니다.<br/>![Java](https://img.shields.io/badge/Java-Programming_Language-orange)![Spring_Framework](https://img.shields.io/badge/Spring_Framework-Application_Framework-brightgreen)<br/>```java @Service @Transactional public class BoardConfigService {     private final BoardConfigRepository boardConfigRepository;     public BoardConfigService(BoardConfigRepository boardConfigRepository) {         this.boardConfigRepository = boardConfigRepository;     }     public void saveBoardConfig(BoardConfig boardConfig) {         // Save board configuration data using repository         boardConfigRepository.save(boardConfig);     }     public BoardConfig findBoardConfigById(Long id) {         // Find board configuration by ID using repository         return boardConfigRepository.findById(id).orElse(null);     } }```<br/>[**Spring을 이용한 보드 게시판 서비스 관리**](https://spring.io/guides) 이 Java 서비스 클래스는 보드 엔티티와 상호작용하여 보드 데이터의 저장, 삭제, 업데이트, 검색을 수행합니다. 또한 특정 ID, 이름, 키워드 검색에 따라 보드를 찾을 수 있는 메서드가 포함되어 있습니다.<br/>유용한 기능으로 데이터베이스와 상호작용하기 위해 BoardRepository 인터페이스를 사용하며 트랜잭션 관리 및 의존성 주입을 위한 필수 Spring 주석을 사용하고 있습니다.
